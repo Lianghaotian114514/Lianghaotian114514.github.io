@@ -54,7 +54,7 @@ footer-links:
   stackoverflow: # your stackoverflow profile, e.g. "users/50476/bart-kiers"
   tumblr: # https://<username>.tumblr.com
   twitter:
-  youtube:LHT0127
+  youtube: LHT0127
 
 # Text under the icons in footer
 footer-text: Copyright (c) 2023 Arnold
@@ -120,4 +120,3 @@ exclude:
   - LICENSE
   - README.md
   - CNAME
-

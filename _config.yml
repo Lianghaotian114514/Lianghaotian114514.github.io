@@ -24,7 +24,7 @@ navigation:
     url: /
   - name: 关于
     url: /about
-  - name: 我与薯片
+  - name: 薯片与代码
     url: /archive
   - name: 标签
     url: /tags

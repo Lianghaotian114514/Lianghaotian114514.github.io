@@ -1,21 +1,555 @@
----
-layout: page
-title: 呼叫技术支持
-permalink: /archive/
----
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>薯片与代码 · Chips & Code</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥔</text></svg>">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style type="text/tailwindcss">
+  @custom-variant dark (&:where(.dark, .dark *));
+  @theme {
+    --color-crisp-50:  #fffaf0;
+    --color-crisp-100: #fdf0d8;
+    --color-crisp-200: #f8dfaa;
+    --color-crisp-300: #f2c76d;
+    --color-crisp-400: #eaa93a;
+    --color-crisp-500: #d98816;
+    --color-crisp-600: #b26810;
+    --color-crisp-700: #8a4f12;
+    --color-ink-800:   #241f1a;
+    --color-ink-900:   #17130f;
+  }
+</style>
+<style>
+  :root { color-scheme: light; }
+  html.dark { color-scheme: dark; }
 
-如你遇到任何计算机技术问题，我提供以下几种方式供您获取帮助：<br><br>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                 "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  }
+  .mono {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, "Courier New", monospace;
+  }
 
-1. **常规技术支持邮箱**：<br>  
-   - **邮箱**：lianghaotian114514@outlook.com
-   - **响应时间**：通常在7日内得到答复。<br><br>
+  /* ---------- 薯片本体 ---------- */
+  #chip {
+    transition: transform 0.75s cubic-bezier(.2,.9,.25,1.25), filter .25s ease;
+    will-change: transform;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  #chip:hover   { filter: drop-shadow(0 12px 22px rgba(217,136,22,.35)); }
+  #chip:active  { filter: drop-shadow(0 4px 10px rgba(217,136,22,.5)); }
+  #chip.fast    { transition-duration: .45s; }
+  #chip.turbo   { transition-duration: .28s; }
 
-2. **紧急技术支持邮箱**：<br>  
-   - **邮箱**：lht.wl.1024@gmail.com
-   - **响应时间**：24小时内得到答复。<br><br>
+  #asciiChip {
+    line-height: 1.05;
+    letter-spacing: .06em;
+    white-space: pre;
+  }
 
-3. **加急传真**：<br>  
-   - **传真号码**：+86 0375 26737123  
-   - **受理时间**：仅在8:00至21:00之间受理，提供最快响应。<br><br>
+  /* 静止时的呼吸摇摆 */
+  @keyframes idlefloat {
+    0%,100% { transform: translateY(0px); }
+    50%     { transform: translateY(-8px); }
+  }
+  .floaty { animation: idlefloat 4.5s ease-in-out infinite; }
 
-我会尽最大努力为您提供及时的技术支持。如有任何问题，请随时联系我！
+  /* 点击时的地面光晕 */
+  @keyframes pulsering {
+    from { transform: scale(.6); opacity:.55; }
+    to   { transform: scale(1.9); opacity:0; }
+  }
+  .ring { animation: pulsering .7s ease-out forwards; }
+
+  /* 碎屑 */
+  .crumb { position:absolute; pointer-events:none; font-size:14px; will-change:transform,opacity; }
+
+  /* 计数器数字跳动 */
+  @keyframes pop { 0%{transform:scale(1)} 40%{transform:scale(1.28)} 100%{transform:scale(1)} }
+  .pop { animation: pop .32s ease-out; }
+
+  @keyframes toastin {
+    from { transform: translateY(14px) scale(.95); opacity:0; }
+    to   { transform: translateY(0) scale(1); opacity:1; }
+  }
+  .toast-in { animation: toastin .35s cubic-bezier(.2,.9,.3,1.3) forwards; }
+
+  .grain {
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(217,136,22,.10), transparent 45%),
+      radial-gradient(circle at 80% 10%, rgba(234,169,58,.12), transparent 40%),
+      radial-gradient(circle at 60% 85%, rgba(178,104,16,.08), transparent 45%);
+  }
+  ::selection { background: #f2c76d; color:#17130f; }
+</style>
+</head>
+
+<body class="bg-crisp-50 text-ink-800 dark:bg-ink-900 dark:text-crisp-100 antialiased transition-colors duration-300">
+
+<!-- ================= 导航 ================= -->
+<header class="sticky top-0 z-40 backdrop-blur-md bg-crisp-50/80 dark:bg-ink-900/80 border-b border-crisp-200/70 dark:border-white/10">
+  <nav class="max-w-5xl mx-auto px-5 h-16 flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-2 font-bold tracking-tight">
+      <span class="text-2xl">🥔</span>
+      <span class="text-lg">薯片与代码</span>
+    </a>
+    <div class="flex items-center gap-1 sm:gap-2">
+      <a href="#posts" class="px-3 py-2 text-sm rounded-lg hover:bg-crisp-100 dark:hover:bg-white/10 transition">文章</a>
+      <a href="#about" class="px-3 py-2 text-sm rounded-lg hover:bg-crisp-100 dark:hover:bg-white/10 transition">关于</a>
+      <button id="soundBtn" title="开关音效" class="w-9 h-9 grid place-items-center rounded-lg hover:bg-crisp-100 dark:hover:bg-white/10 transition text-lg">🔇</button>
+      <button id="themeBtn" title="切换主题" class="w-9 h-9 grid place-items-center rounded-lg hover:bg-crisp-100 dark:hover:bg-white/10 transition text-lg">🌙</button>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+
+<!-- ================= 主视觉 · 可旋转薯片 ================= -->
+<section class="grain">
+  <div class="max-w-5xl mx-auto px-5 pt-14 pb-10 text-center">
+
+    <p class="inline-block mono text-xs tracking-widest uppercase px-3 py-1 rounded-full border border-crisp-300/70 dark:border-white/15 text-crisp-600 dark:text-crisp-300">
+      a personal blog · since 2021
+    </p>
+
+    <h1 class="mt-5 text-4xl sm:text-5xl font-black tracking-tight">
+      点一下薯片，<span class="text-crisp-500">它会转一圈</span>
+    </h1>
+    <p class="mt-3 text-sm sm:text-base opacity-70 max-w-xl mx-auto">
+      没什么大用，但很解压。点击次数会存在你的浏览器里，下次来还在。
+    </p>
+
+    <!-- 薯片舞台 -->
+    <div id="stage" class="relative mx-auto mt-10 w-[300px] h-[300px] sm:w-[340px] sm:h-[340px] grid place-items-center">
+      <!-- 底座光晕 -->
+      <div class="absolute w-56 h-56 rounded-full bg-crisp-300/30 dark:bg-crisp-500/15 blur-3xl"></div>
+      <div id="ringHost" class="absolute inset-0 grid place-items-center pointer-events-none"></div>
+
+      <!-- 可点击主体 -->
+      <button id="chip" aria-label="点击旋转薯片" class="floaty relative z-10 cursor-pointer outline-none focus-visible:ring-4 focus-visible:ring-crisp-400/50 rounded-full p-6">
+        <pre id="asciiChip" class="mono text-crisp-600 dark:text-crisp-300 text-[13px] sm:text-[15px] font-bold">     _.-~^~-._
+   ,~  .  .  .  ~.
+  /  .   .  .  .  \
+ |  .  .  .  .  .  |
+ |   .  .  .  .   .|
+  \  .   .  .  .  /
+   `~._  .  .  _.~'
+       `~-...-~'</pre>
+        <span id="emojiChip" class="hidden text-[110px] sm:text-[130px] leading-none block">🍪</span>
+      </button>
+
+      <!-- 提示 -->
+      <span id="hint" class="absolute bottom-0 text-xs opacity-50 mono transition-opacity">↑ click me ↑</span>
+    </div>
+
+    <!-- 形态切换 -->
+    <div class="mt-6 flex flex-wrap items-center justify-center gap-2">
+      <span class="text-xs opacity-50 mr-1">换个东西转：</span>
+      <button data-face="ascii" class="face-btn mono text-xs px-3 py-1.5 rounded-full border border-crisp-300 dark:border-white/15 hover:bg-crisp-100 dark:hover:bg-white/10 transition">ASCII</button>
+      <button data-face="🍪" class="face-btn text-lg w-9 h-9 rounded-full border border-crisp-300 dark:border-white/15 hover:bg-crisp-100 dark:hover:bg-white/10 transition">🍪</button>
+      <button data-face="🥔" class="face-btn text-lg w-9 h-9 rounded-full border border-crisp-300 dark:border-white/15 hover:bg-crisp-100 dark:hover:bg-white/10 transition">🥔</button>
+      <button data-face="🍟" class="face-btn text-lg w-9 h-9 rounded-full border border-crisp-300 dark:border-white/15 hover:bg-crisp-100 dark:hover:bg-white/10 transition">🍟</button>
+      <button data-face="🧇" class="face-btn text-lg w-9 h-9 rounded-full border border-crisp-300 dark:border-white/15 hover:bg-crisp-100 dark:hover:bg-white/10 transition">🧇</button>
+      <button data-face="🍩" class="face-btn text-lg w-9 h-9 rounded-full border border-crisp-300 dark:border-white/15 hover:bg-crisp-100 dark:hover:bg-white/10 transition">🍩</button>
+      <button data-face="💿" class="face-btn text-lg w-9 h-9 rounded-full border border-crisp-300 dark:border-white/15 hover:bg-crisp-100 dark:hover:bg-white/10 transition">💿</button>
+    </div>
+
+    <!-- ============ 计数统计 ============ -->
+    <div class="mt-10 mx-auto max-w-2xl rounded-3xl border border-crisp-200 dark:border-white/10 bg-white/70 dark:bg-white/5 shadow-sm p-6 sm:p-8">
+      <p class="text-sm opacity-60">这块薯片已经被你转了</p>
+      <div class="mt-1 flex items-end justify-center gap-2">
+        <span id="count" class="mono text-6xl sm:text-7xl font-black text-crisp-500 tabular-nums">0</span>
+        <span class="text-lg pb-2 opacity-70">圈</span>
+      </div>
+
+      <div class="mt-6 grid grid-cols-3 divide-x divide-crisp-200 dark:divide-white/10">
+        <div class="px-2">
+          <div id="degrees" class="mono font-bold text-base sm:text-lg tabular-nums">0°</div>
+          <div class="text-[11px] opacity-55 mt-0.5">累计角度</div>
+        </div>
+        <div class="px-2">
+          <div id="combo" class="mono font-bold text-base sm:text-lg tabular-nums">0</div>
+          <div class="text-[11px] opacity-55 mt-0.5">最高连击</div>
+        </div>
+        <div class="px-2">
+          <div id="rank" class="font-bold text-base sm:text-lg">薯片新手</div>
+          <div class="text-[11px] opacity-55 mt-0.5">当前称号</div>
+        </div>
+      </div>
+
+      <!-- 进度条 -->
+      <div class="mt-6 text-left">
+        <div class="flex justify-between text-[11px] opacity-55 mb-1">
+          <span id="nextLabel">下一个成就：转满 10 圈</span>
+          <span id="nextPct">0%</span>
+        </div>
+        <div class="h-2 rounded-full bg-crisp-200/70 dark:bg-white/10 overflow-hidden">
+          <div id="bar" class="h-full w-0 rounded-full bg-gradient-to-r from-crisp-300 to-crisp-500 transition-all duration-500"></div>
+        </div>
+      </div>
+
+      <button id="resetBtn" class="mt-6 text-xs px-3 py-1.5 rounded-full opacity-50 hover:opacity-100 border border-transparent hover:border-crisp-300 dark:hover:border-white/15 transition">
+        清空计数
+      </button>
+    </div>
+
+    <!-- 成就墙 -->
+    <div id="badges" class="mt-6 flex flex-wrap justify-center gap-2"></div>
+  </div>
+</section>
+
+<!-- ================= 文章列表 ================= -->
+<section id="posts" class="max-w-5xl mx-auto px-5 py-16">
+  <div class="flex items-baseline justify-between border-b border-crisp-200 dark:border-white/10 pb-3">
+    <h2 class="text-2xl font-bold tracking-tight">最近写的</h2>
+    <span class="mono text-xs opacity-50">4 posts</span>
+  </div>
+
+  <div class="mt-8 grid sm:grid-cols-2 gap-5" id="postGrid"></div>
+</section>
+
+<!-- ================= 关于 ================= -->
+<section id="about" class="max-w-5xl mx-auto px-5 pb-20">
+  <div class="rounded-3xl border border-crisp-200 dark:border-white/10 bg-white/60 dark:bg-white/5 p-8 sm:p-10 grid sm:grid-cols-[auto_1fr] gap-8 items-start">
+    <div class="mono text-crisp-500 text-xs leading-tight select-none">
+<pre>  ┌───────────┐
+  │  o     o  │
+  │     ▾     │
+  │   \___/   │
+  └───────────┘
+    ~ hello ~</pre>
+    </div>
+    <div>
+      <h2 class="text-2xl font-bold tracking-tight">关于我</h2>
+      <p class="mt-3 text-sm leading-7 opacity-80">
+        白天写代码，晚上写博客，间歇性吃薯片。这里记录一些工程笔记、读书摘录，
+        以及那些做完之后毫无用处、但让我很开心的小东西——比如你刚刚转过的那块薯片。
+      </p>
+      <div class="mt-5 flex flex-wrap gap-2 mono text-xs">
+        <span class="px-3 py-1.5 rounded-full bg-crisp-100 dark:bg-white/10">前端</span>
+        <span class="px-3 py-1.5 rounded-full bg-crisp-100 dark:bg-white/10">交互动效</span>
+        <span class="px-3 py-1.5 rounded-full bg-crisp-100 dark:bg-white/10">胡乱折腾</span>
+      </div>
+      <div class="mt-6 flex gap-3 text-sm">
+        <a href="#" class="px-4 py-2 rounded-xl bg-crisp-500 text-white hover:bg-crisp-600 transition shadow-sm">订阅 RSS</a>
+        <a href="#" class="px-4 py-2 rounded-xl border border-crisp-300 dark:border-white/15 hover:bg-crisp-100 dark:hover:bg-white/10 transition">发邮件</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="border-t border-crisp-200 dark:border-white/10">
+  <div class="max-w-5xl mx-auto px-5 py-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs opacity-60">
+    <span>© 2026 薯片与代码 · 用 HTML 和一点点碳水搭成</span>
+    <span class="mono">本页共被转动 <b id="footCount">0</b> 圈</span>
+  </div>
+</footer>
+
+<!-- 提示气泡 -->
+<div id="toast" class="fixed left-1/2 -translate-x-1/2 bottom-8 z-50 hidden">
+  <div class="px-5 py-3 rounded-2xl bg-ink-800 text-crisp-100 dark:bg-crisp-100 dark:text-ink-900 shadow-2xl text-sm font-medium flex items-center gap-2">
+    <span id="toastIcon">🎉</span><span id="toastText"></span>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------------- 元素 ---------------- */
+  const chip      = document.getElementById('chip');
+  const asciiChip = document.getElementById('asciiChip');
+  const emojiChip = document.getElementById('emojiChip');
+  const stage     = document.getElementById('stage');
+  const ringHost  = document.getElementById('ringHost');
+  const hint      = document.getElementById('hint');
+  const countEl   = document.getElementById('count');
+  const footCount = document.getElementById('footCount');
+  const degEl     = document.getElementById('degrees');
+  const comboEl   = document.getElementById('combo');
+  const rankEl    = document.getElementById('rank');
+  const barEl     = document.getElementById('bar');
+  const nextLabel = document.getElementById('nextLabel');
+  const nextPct   = document.getElementById('nextPct');
+  const badgesEl  = document.getElementById('badges');
+  const resetBtn  = document.getElementById('resetBtn');
+  const themeBtn  = document.getElementById('themeBtn');
+  const soundBtn  = document.getElementById('soundBtn');
+
+  /* ---------------- 状态 ---------------- */
+  const KEY = 'chipSpinner.v1';
+  const defaults = { count: 0, bestCombo: 0, face: 'ascii', sound: false, theme: 'light' };
+  let state = Object.assign({}, defaults);
+  try { Object.assign(state, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) {}
+
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} };
+
+  let rotation = 0;          // 累计旋转角度（视觉）
+  let combo = 0;             // 当前连击
+  let comboTimer = null;
+  let lastClick = 0;
+
+  /* ---------------- 成就 ---------------- */
+  const MILESTONES = [
+    { n: 1,    icon: '👋', name: '第一转',     msg: '第一圈！薯片向你问好。' },
+    { n: 10,   icon: '🌀', name: '十连转',     msg: '10 圈达成，手感不错。' },
+    { n: 50,   icon: '🍟', name: '半百薯神',   msg: '50 圈！你听见咔嚓声了吗？' },
+    { n: 100,  icon: '💯', name: '百圈达人',   msg: '100 圈，正式脱离新手村。' },
+    { n: 256,  icon: '🧠', name: '2⁸ 强迫症',  msg: '256 圈，非常程序员的数字。' },
+    { n: 500,  icon: '🔥', name: '五百狂徒',   msg: '500 圈！鼠标还好吗？' },
+    { n: 1000, icon: '👑', name: '薯片之王',   msg: '1000 圈。这块薯片永远属于你。' }
+  ];
+  const RANKS = [
+    [0,'薯片新手'], [10,'轻度上瘾'], [50,'咔嚓爱好者'],
+    [100,'旋转研究员'], [256,'碳水工程师'], [500,'油炸大师'], [1000,'薯片之王']
+  ];
+
+  /* ---------------- 音效（Web Audio 现场合成"咔嚓"） ---------------- */
+  let actx = null;
+  function crunch(pitch) {
+    if (!state.sound) return;
+    try {
+      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+      if (actx.state === 'suspended') actx.resume();
+      const dur = 0.12, sr = actx.sampleRate;
+      const buf = actx.createBuffer(1, Math.floor(sr * dur), sr);
+      const data = buf.getChannelData(0);
+      for (let i = 0; i < data.length; i++) {
+        const t = i / data.length;
+        data[i] = (Math.random() * 2 - 1) * Math.pow(1 - t, 3.2);
+      }
+      const src = actx.createBufferSource(); src.buffer = buf;
+      const bp = actx.createBiquadFilter();
+      bp.type = 'bandpass';
+      bp.frequency.value = 1100 + pitch * 130;
+      bp.Q.value = 1.1;
+      const g = actx.createGain();
+      g.gain.value = 0.22;
+      src.connect(bp).connect(g).connect(actx.destination);
+      src.start();
+    } catch (e) {}
+  }
+
+  /* ---------------- 渲染 ---------------- */
+  function currentRank(n) {
+    let r = RANKS[0][1];
+    for (const [min, name] of RANKS) if (n >= min) r = name;
+    return r;
+  }
+
+  function render(animate) {
+    const n = state.count;
+    countEl.textContent = n.toLocaleString('en-US');
+    footCount.textContent = n.toLocaleString('en-US');
+    degEl.textContent = (n * 360).toLocaleString('en-US') + '°';
+    comboEl.textContent = state.bestCombo + 'x';
+    rankEl.textContent = currentRank(n);
+
+    // 进度条 → 下一个成就
+    const next = MILESTONES.find(m => m.n > n);
+    if (next) {
+      const prev = [...MILESTONES].reverse().find(m => m.n <= n);
+      const base = prev ? prev.n : 0;
+      const pct = Math.max(0, Math.min(100, ((n - base) / (next.n - base)) * 100));
+      nextLabel.textContent = '下一个成就：转满 ' + next.n + ' 圈 ' + next.icon;
+      nextPct.textContent = Math.floor(pct) + '%';
+      barEl.style.width = pct + '%';
+    } else {
+      nextLabel.textContent = '全部成就已解锁，你就是薯片本片 👑';
+      nextPct.textContent = '100%';
+      barEl.style.width = '100%';
+    }
+
+    // 成就墙
+    badgesEl.innerHTML = '';
+    MILESTONES.forEach(m => {
+      const got = n >= m.n;
+      const el = document.createElement('span');
+      el.className = 'mono text-[11px] px-3 py-1.5 rounded-full border transition ' +
+        (got
+          ? 'border-crisp-400 bg-crisp-100 dark:bg-crisp-500/20 dark:border-crisp-500/50 text-crisp-700 dark:text-crisp-200'
+          : 'border-dashed border-crisp-200 dark:border-white/10 opacity-40');
+      el.textContent = m.icon + ' ' + m.name + (got ? '' : ' · ' + m.n);
+      el.title = got ? '已解锁' : '还需 ' + (m.n - n) + ' 圈';
+      badgesEl.appendChild(el);
+    });
+
+    if (animate) {
+      countEl.classList.remove('pop');
+      void countEl.offsetWidth;
+      countEl.classList.add('pop');
+    }
+  }
+
+  /* ---------------- 特效 ---------------- */
+  function spawnRing() {
+    const r = document.createElement('div');
+    r.className = 'ring absolute w-40 h-40 rounded-full border-2 border-crisp-400/70';
+    ringHost.appendChild(r);
+    setTimeout(() => r.remove(), 750);
+  }
+
+  const CRUMBS = ['·', '•', '˙', '∗', '✦', '🍟', '🥔'];
+  function spawnCrumbs(amount) {
+    const rect = stage.getBoundingClientRect();
+    for (let i = 0; i < amount; i++) {
+      const c = document.createElement('span');
+      c.className = 'crumb';
+      c.textContent = CRUMBS[Math.floor(Math.random() * CRUMBS.length)];
+      c.style.left = (rect.width / 2) + 'px';
+      c.style.top  = (rect.height / 2) + 'px';
+      c.style.color = ['#eaa93a', '#d98816', '#f2c76d'][i % 3];
+      stage.appendChild(c);
+      const ang = Math.random() * Math.PI * 2;
+      const dist = 70 + Math.random() * 110;
+      c.animate([
+        { transform: 'translate(-50%,-50%) scale(.4) rotate(0deg)', opacity: 1 },
+        { transform: 'translate(' + (Math.cos(ang) * dist - 50) + '%,' + (Math.sin(ang) * dist + 40) + '%) scale(1.1) rotate(' + (Math.random() * 540 - 270) + 'deg)', opacity: 0 }
+      ], { duration: 700 + Math.random() * 500, easing: 'cubic-bezier(.2,.7,.3,1)' })
+        .onfinish = () => c.remove();
+    }
+  }
+
+  let toastTimer = null;
+  function toast(icon, text) {
+    const box = document.getElementById('toast');
+    document.getElementById('toastIcon').textContent = icon;
+    document.getElementById('toastText').textContent = text;
+    box.classList.remove('hidden');
+    box.firstElementChild.classList.remove('toast-in');
+    void box.offsetWidth;
+    box.firstElementChild.classList.add('toast-in');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => box.classList.add('hidden'), 2600);
+  }
+
+  /* ---------------- 核心：点击旋转 ---------------- */
+  function spin() {
+    const now = Date.now();
+
+    // 连击判定（1 秒内继续点算连击）
+    combo = (now - lastClick < 1000) ? combo + 1 : 1;
+    lastClick = now;
+    clearTimeout(comboTimer);
+    comboTimer = setTimeout(() => { combo = 0; }, 1200);
+    if (combo > state.bestCombo) state.bestCombo = combo;
+
+    // 转速随连击加快
+    chip.classList.remove('fast', 'turbo');
+    if (combo >= 8) chip.classList.add('turbo');
+    else if (combo >= 4) chip.classList.add('fast');
+
+    // 每次点击 = 恰好一圈；连击 5 次以上偶尔来个漂亮的多圈
+    const extra = (combo >= 5 && combo % 5 === 0) ? 720 : 0;
+    rotation += 360 + extra;
+
+    chip.classList.remove('floaty');
+    chip.style.transform = 'rotate(' + rotation + 'deg)';
+
+    state.count++;
+    save();
+    render(true);
+
+    spawnRing();
+    spawnCrumbs(combo >= 4 ? 10 : 6);
+    crunch(Math.min(combo, 8));
+
+    if (hint) hint.style.opacity = '0';
+
+    // 成就提示
+    const hit = MILESTONES.find(m => m.n === state.count);
+    if (hit) { toast(hit.icon, hit.msg); spawnCrumbs(26); }
+    else if (extra) { toast('🌀', combo + ' 连击！额外附赠一圈。'); }
+  }
+
+  chip.addEventListener('click', spin);
+  chip.addEventListener('keydown', e => {
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); spin(); }
+  });
+
+  /* ---------------- 形态切换 ---------------- */
+  function setFace(face) {
+    state.face = face;
+    if (face === 'ascii') {
+      asciiChip.classList.remove('hidden');
+      emojiChip.classList.add('hidden');
+    } else {
+      asciiChip.classList.add('hidden');
+      emojiChip.classList.remove('hidden');
+      emojiChip.textContent = face;
+    }
+    document.querySelectorAll('.face-btn').forEach(b => {
+      const on = b.dataset.face === face;
+      b.classList.toggle('bg-crisp-200', on);
+      b.classList.toggle('dark:bg-white/15', on);
+      b.classList.toggle('border-crisp-500', on);
+    });
+    save();
+  }
+  document.querySelectorAll('.face-btn').forEach(b =>
+    b.addEventListener('click', () => setFace(b.dataset.face))
+  );
+
+  /* ---------------- 主题 / 音效 ---------------- */
+  function applyTheme() {
+    const dark = state.theme === 'dark';
+    document.documentElement.classList.toggle('dark', dark);
+    themeBtn.textContent = dark ? '☀️' : '🌙';
+  }
+  themeBtn.addEventListener('click', () => {
+    state.theme = state.theme === 'dark' ? 'light' : 'dark';
+    applyTheme(); save();
+  });
+
+  function applySound() { soundBtn.textContent = state.sound ? '🔊' : '🔇'; }
+  soundBtn.addEventListener('click', () => {
+    state.sound = !state.sound; applySound(); save();
+    if (state.sound) crunch(3);
+  });
+
+  /* ---------------- 重置 ---------------- */
+  resetBtn.addEventListener('click', () => {
+    if (!confirm('确定要把 ' + state.count + ' 圈的努力清零吗？')) return;
+    state.count = 0; state.bestCombo = 0; save(); render(true);
+    toast('🧹', '计数已清空，一切重新开始。');
+  });
+
+  /* ---------------- 文章列表 ---------------- */
+  const POSTS = [
+    { t: '为什么我在博客里放了一块会转的薯片', d: '2026-02-18', tag: '碎碎念',
+      s: '无用的交互往往最让人记得住。聊聊"愉悦感"在个人站点里的分量，以及 40 行 JS 能带来多少快乐。', m: '4 分钟' },
+    { t: 'CSS transform 累加旋转的小陷阱', d: '2026-01-30', tag: '前端',
+      s: '把 rotate 设成 360deg 后再点一次就不动了？答案是：别重置角度，让它一直加下去。', m: '6 分钟' },
+    { t: '用 Web Audio 合成一声"咔嚓"', d: '2025-12-12', tag: '音频',
+      s: '不加载任何音频文件，用白噪声 + 带通滤波 + 指数衰减，现场捏一个清脆的碎裂声。', m: '8 分钟' },
+    { t: 'localStorage 是最被低估的后端', d: '2025-11-03', tag: '工程',
+      s: '对于一个静态博客来说，用户的浏览器就是最便宜、最快、最隐私友好的数据库。', m: '5 分钟' }
+  ];
+  document.getElementById('postGrid').innerHTML = POSTS.map(p => `
+    <article class="group rounded-2xl border border-crisp-200 dark:border-white/10 bg-white/60 dark:bg-white/5 p-6 hover:-translate-y-1 hover:shadow-lg hover:border-crisp-400 transition-all duration-300 cursor-pointer">
+      <div class="flex items-center gap-2 mono text-[11px] opacity-55">
+        <span>${p.d}</span><span>·</span>
+        <span class="px-2 py-0.5 rounded-full bg-crisp-100 dark:bg-white/10">${p.tag}</span>
+        <span class="ml-auto">${p.m}</span>
+      </div>
+      <h3 class="mt-3 font-bold text-lg leading-snug group-hover:text-crisp-600 dark:group-hover:text-crisp-300 transition">${p.t}</h3>
+      <p class="mt-2 text-sm leading-6 opacity-70">${p.s}</p>
+      <span class="mt-4 inline-block mono text-xs text-crisp-600 dark:text-crisp-300 opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all">read more →</span>
+    </article>`).join('');
+
+  /* ---------------- 初始化 ---------------- */
+  applyTheme();
+  applySound();
+  setFace(state.face);
+  render(false);
+  if (state.count > 0 && hint) hint.textContent = '↑ 再转一圈？ ↑';
+})();
+</script>
+</body>
+</html>

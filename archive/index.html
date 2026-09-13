@@ -203,14 +203,6 @@
 </section>
 
 <!-- ================= 文章列表 ================= -->
-<section id="posts" class="max-w-5xl mx-auto px-5 py-16">
-  <div class="flex items-baseline justify-between border-b border-crisp-200 dark:border-white/10 pb-3">
-    <h2 class="text-2xl font-bold tracking-tight">最近写的</h2>
-    <span class="mono text-xs opacity-50">4 posts</span>
-  </div>
-
-  <div class="mt-8 grid sm:grid-cols-2 gap-5" id="postGrid"></div>
-</section>
 
 <!-- ================= 关于 ================= -->
 <section id="about" class="max-w-5xl mx-auto px-5 pb-20">
@@ -521,27 +513,7 @@
   });
 
   /* ---------------- 文章列表 ---------------- */
-  const POSTS = [
-    { t: '为什么我在博客里放了一块会转的薯片', d: '2026-02-18', tag: '碎碎念',
-      s: '无用的交互往往最让人记得住。聊聊"愉悦感"在个人站点里的分量，以及 40 行 JS 能带来多少快乐。', m: '4 分钟' },
-    { t: 'CSS transform 累加旋转的小陷阱', d: '2026-01-30', tag: '前端',
-      s: '把 rotate 设成 360deg 后再点一次就不动了？答案是：别重置角度，让它一直加下去。', m: '6 分钟' },
-    { t: '用 Web Audio 合成一声"咔嚓"', d: '2025-12-12', tag: '音频',
-      s: '不加载任何音频文件，用白噪声 + 带通滤波 + 指数衰减，现场捏一个清脆的碎裂声。', m: '8 分钟' },
-    { t: 'localStorage 是最被低估的后端', d: '2025-11-03', tag: '工程',
-      s: '对于一个静态博客来说，用户的浏览器就是最便宜、最快、最隐私友好的数据库。', m: '5 分钟' }
-  ];
-  document.getElementById('postGrid').innerHTML = POSTS.map(p => `
-    <article class="group rounded-2xl border border-crisp-200 dark:border-white/10 bg-white/60 dark:bg-white/5 p-6 hover:-translate-y-1 hover:shadow-lg hover:border-crisp-400 transition-all duration-300 cursor-pointer">
-      <div class="flex items-center gap-2 mono text-[11px] opacity-55">
-        <span>${p.d}</span><span>·</span>
-        <span class="px-2 py-0.5 rounded-full bg-crisp-100 dark:bg-white/10">${p.tag}</span>
-        <span class="ml-auto">${p.m}</span>
-      </div>
-      <h3 class="mt-3 font-bold text-lg leading-snug group-hover:text-crisp-600 dark:group-hover:text-crisp-300 transition">${p.t}</h3>
-      <p class="mt-2 text-sm leading-6 opacity-70">${p.s}</p>
-      <span class="mt-4 inline-block mono text-xs text-crisp-600 dark:text-crisp-300 opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all">read more →</span>
-    </article>`).join('');
+
 
   /* ---------------- 初始化 ---------------- */
   applyTheme();

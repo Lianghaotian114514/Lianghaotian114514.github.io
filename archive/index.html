@@ -93,10 +93,19 @@
 <!-- ================= 导航 ================= -->
 <header class="sticky top-0 z-40 backdrop-blur-md bg-crisp-50/80 dark:bg-ink-900/80 border-b border-crisp-200/70 dark:border-white/10">
   <nav class="max-w-5xl mx-auto px-5 h-16 flex items-center justify-between">
-    <a href="#top" class="flex items-center gap-2 font-bold tracking-tight">
-      <span class="text-2xl">🥔</span>
-      <span class="text-lg">薯片与代码</span>
-    </a>
+    <div class="flex items-center gap-2 sm:gap-3">
+      <!-- 左上角：返回主站 -->
+      <a id="backBtn" href="https://Lianghaotian114514.github.io" title="返回 Lianghaotian114514.github.io"
+         class="group shrink-0 flex items-center gap-1.5 pl-2 pr-3 py-2 rounded-xl border border-crisp-300 dark:border-white/15 bg-white/70 dark:bg-white/5 hover:bg-crisp-100 dark:hover:bg-white/10 hover:border-crisp-500 hover:-translate-x-0.5 active:scale-95 transition-all duration-200 shadow-sm">
+        <span class="text-base leading-none transition-transform duration-200 group-hover:-translate-x-0.5">←</span>
+        <span class="text-xs sm:text-sm font-medium whitespace-nowrap">返回</span>
+      </a>
+
+      <a href="#top" class="flex items-center gap-2 font-bold tracking-tight">
+        <span class="text-2xl">🥔</span>
+        <span class="hidden sm:inline text-lg">薯片与代码</span>
+      </a>
+    </div>
     <div class="flex items-center gap-1 sm:gap-2">
       <a href="#posts" class="px-3 py-2 text-sm rounded-lg hover:bg-crisp-100 dark:hover:bg-white/10 transition">文章</a>
       <a href="#about" class="px-3 py-2 text-sm rounded-lg hover:bg-crisp-100 dark:hover:bg-white/10 transition">关于</a>

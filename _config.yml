@@ -24,7 +24,7 @@ navigation:
     url: /
   - name: 关于
     url: /about
-  - name: 呼叫技术支持
+  - name: 我与薯片
     url: /archive
   - name: 标签
     url: /tags

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>牢电工的国庆作品集</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=ZCOOL+QingKe+HuangYou&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root{--green:#3dff88;--amber:#f4d35e;--red:#f95738;--blue:#7ad7ff;--line:#243049;}
+    *{box-sizing:border-box}
+    html,body{min-height:100%;margin:0}
+    body{background:#070910;color:#e8ecf5;font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;
+      background-image:linear-gradient(rgba(61,255,136,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(61,255,136,.025) 1px,transparent 1px);
+      background-size:38px 38px}
+    main{width:min(980px,calc(100% - 32px));margin:0 auto;padding:38px 0 58px}
+    h1{margin:0;text-align:center;font-family:"ZCOOL QingKe HuangYou",sans-serif;font-size:clamp(32px,7vw,58px);
+      letter-spacing:.15em;text-shadow:0 0 25px rgba(122,215,255,.35)}
+    .sub{text-align:center;font:11px "Share Tech Mono",monospace;letter-spacing:.35em;color:#627c99;margin:8px 0 25px}
+    .note{position:relative;border:1px solid var(--line);background:rgba(13,19,34,.92);padding:20px 22px;line-height:2;margin-bottom:22px}
+    .note:before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:var(--amber)}
+    .note h2{font:20px "ZCOOL QingKe HuangYou",sans-serif;color:var(--amber);letter-spacing:.12em;margin:0 0 8px}
+    .note p{margin:4px 0;color:#b9c8dd;font-size:13.5px}.note em{font-style:normal;color:var(--green)}
+    .sign{text-align:right;color:#71849f;font-size:12px;margin-top:10px}
+    .games{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px}
+    .game{display:block;text-decoration:none;color:inherit;border:2px solid var(--line);background:#0d1322;transition:.16s;overflow:hidden}
+    .game:hover{transform:translateY(-5px);box-shadow:0 10px 0 #03050a}.game.a:hover{border-color:var(--green)}.game.b:hover{border-color:var(--amber)}
+    .art{height:150px;position:relative;overflow:hidden;background:#05070e}
+    .art canvas{width:100%;height:100%;display:block;image-rendering:pixelated}
+    .body{padding:15px 17px 17px}.body h2{font:25px "ZCOOL QingKe HuangYou",sans-serif;letter-spacing:.12em;margin:0}
+    .a h2{color:var(--green)}.b h2{color:var(--amber)}
+    .en{font:10px "Share Tech Mono",monospace;letter-spacing:.25em;color:#647d99;margin:2px 0 10px}
+    .desc{font-size:13px;color:#9fb3cc;line-height:1.85;min-height:72px}
+    .launch{display:inline-block;border:2px solid currentColor;padding:8px 17px;margin-top:10px;font-weight:700;font-size:12px}
+    .a .launch{color:var(--green)}.b .launch{color:var(--amber)}
+    .gstat{display:flex;gap:14px;margin-top:10px;font:10.5px "Share Tech Mono",monospace;color:#71849f;flex-wrap:wrap}
+    .gstat i{font-style:normal;color:#9fb3cc}
+    .stats{margin-top:24px}.stats h2{text-align:center;font:12px "Share Tech Mono",monospace;letter-spacing:.26em;color:#71849f}
+    .stats h3{font:15px "ZCOOL QingKe HuangYou",sans-serif;letter-spacing:.12em;margin:18px 0 8px}
+    .hA{color:var(--green)}.hB{color:var(--amber)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+    .stat{border:1px solid var(--line);background:rgba(13,19,34,.84);padding:10px;text-align:center}
+    .stat b{display:block;font:21px "Share Tech Mono",monospace;color:var(--green)}.stat b.am{color:var(--amber)}.stat b.rd{color:var(--red)}.stat b.bl{color:var(--blue)}
+    .stat span{font-size:10.5px;color:#71849f}
+    footer{text-align:center;color:#4d6078;font:10px/1.9 "Share Tech Mono",monospace;margin-top:24px}
+  </style>
+</head>
+<body>
+<main>
+  <h1>牢电工的国庆作品集</h1>
+  <div class="sub">LAO DIANGONG · NATIONAL DAY WORKS · CLASS 85</div>
+
+  <section class="note">
+    <h2>◆ 写在前面</h2>
+    <p>放假第一天，我躺在床上，忽然觉得心里空落落的。</p>
+    <p>平时在班里，<em>臭水在抽屉里发酵</em>，督察长在走廊巡逻，樊某某蹲在后门放风，刺史在我身后一边背单词一边提防实验。下课铃一响，几十个人又从三楼一路冲到食堂二楼。</p>
+    <p>国庆一放假，全安静了。于是我开了电脑，把这些事写成两个小游戏。没有什么深刻的道理，就是怕忘了。</p>
+    <div class="sign">—— 牢电工，于国庆假期第七天凌晨四点</div>
+  </section>
+
+  <section class="games">
+    <a class="game a" href="https://lianghaotian114514.github.io/1" target="_blank" rel="noopener">
+      <div class="art"><canvas id="bombArt" width="400" height="150"></canvas></div>
+      <div class="body">
+        <h2>轰炸八五班</h2><div class="en">PROJECT STINK-BARRAGE</div>
+        <div class="desc">调配臭水、研发酒精枪，从走廊打到湛河，再打上天。最后在远东国际军事法庭一边答辩，一边发电报叫裴锦猴救人。</div>
+        <div class="gstat"><i>970 行</i><i>67 函数</i><i>210 变量</i><i>4 个结局</i></div>
+        <span class="launch">▶ 启动作战</span>
+      </div>
+    </a>
+    <a class="game b" href="https://lianghaotian114514.github.io/2" target="_blank" rel="noopener">
+      <div class="art"><canvas id="rushArt" width="400" height="150"></canvas></div>
+      <div class="body">
+        <h2>食堂抢饭模拟器</h2><div class="en">CANTEEN RUSH SIMULATOR</div>
+        <div class="desc">下课铃响后冲出三楼，穿过人海，躲过作业搜查，抢到午饭；回班还得跟上门讨债的牢电工打一架。</div>
+        <div class="gstat"><i>1064 行</i><i>57 函数</i><i>230 变量</i><i>6 个结局</i></div>
+        <span class="launch">▶ 开始抢饭</span>
+      </div>
+    </a>
+  </section>
+
+  <section class="stats">
+    <h2>— 开 发 数 据 统 计 —</h2>
+
+    <h3 class="hA">◆ 轰炸八五班</h3>
+    <div class="grid">
+      <div class="stat"><b>970</b><span>代码行数</span></div>
+      <div class="stat"><b>67</b><span>函数个数</span></div>
+      <div class="stat"><b>210</b><span>变量声明</span></div>
+      <div class="stat"><b>3</b><span>关卡（陆/海/空）</span></div>
+      <div class="stat"><b>5</b><span>角色</span></div>
+      <div class="stat"><b>2</b><span>超级武器</span></div>
+      <div class="stat"><b>4</b><span>种结局</span></div>
+    </div>
+
+    <h3 class="hB">◆ 食堂抢饭模拟器</h3>
+    <div class="grid">
+      <div class="stat"><b>1064</b><span>代码行数</span></div>
+      <div class="stat"><b>57</b><span>函数个数</span></div>
+      <div class="stat"><b>230</b><span>变量声明</span></div>
+      <div class="stat"><b>7</b><span>可选角色</span></div>
+      <div class="stat"><b>8</b><span>场景</span></div>
+      <div class="stat"><b>6</b><span>种结局</span></div>
+    </div>
+
+    <h3 style="color:#71849f">◆ 两作合计</h3>
+    <div class="grid">
+      <div class="stat"><b>2034</b><span>游戏代码总行数</span></div>
+      <div class="stat"><b>124</b><span>函数总数</span></div>
+      <div class="stat"><b>440</b><span>变量总数</span></div>
+      <div class="stat"><b>12</b><span>角色总数</span></div>
+      <div class="stat"><b>10</b><span>种结局</span></div>
+      <div class="stat"><b class="am">23</b><span>罐魔爪</span></div>
+      <div class="stat"><b class="am">11</b><span>包黄瓜味薯片</span></div>
+      <div class="stat"><b class="rd">4</b><span>次通宵</span></div>
+      <div class="stat"><b class="bl">38</b><span>个已修复 bug</span></div>
+      <div class="stat"><b class="rd">9178</b><span>元/分钟 利息</span></div>
+    </div>
+  </section>
+
+  <footer>
+    魔爪口味：原味 11 · 白魔 7 · 绿魔 5　｜　薯片全部为黄瓜味（樊某某说"这个味儿最像实验室"）<br>
+    两个游戏均以单 HTML 文件部署于 GitHub Pages
+  </footer>
+</main>
+<script>
+  const drawBomb=()=>{
+    const c=document.getElementById("bombArt"),x=c.getContext("2d");let t=0;
+    (function f(){requestAnimationFrame(f);t+=.015;x.fillStyle="#04140b";x.fillRect(0,0,c.width,c.height);
+      x.strokeStyle="rgba(61,255,136,.12)";
+      for(let i=0;i<c.width;i+=25){x.beginPath();x.moveTo(i,0);x.lineTo(i,c.height);x.stroke()}
+      for(let i=0;i<c.height;i+=25){x.beginPath();x.moveTo(0,i);x.lineTo(c.width,i);x.stroke()}
+      x.strokeStyle="#3dff88";x.shadowColor="#3dff88";x.shadowBlur=10;x.lineWidth=2;
+      x.beginPath();x.moveTo(0,128);x.lineTo(c.width,128);x.stroke();x.strokeRect(298,50,70,48);
+      const p=t%1,bx=35+p*285,by=128-Math.sin(p*Math.PI)*82;
+      x.beginPath();x.moveTo(28,128);x.lineTo(55,98);x.stroke();x.beginPath();x.arc(bx,by,6,0,7);x.stroke();x.shadowBlur=0;
+    })();
+  };
+  const drawRush=()=>{
+    const c=document.getElementById("rushArt"),x=c.getContext("2d");let t=0;
+    (function f(){requestAnimationFrame(f);t+=.02;x.fillStyle="#2b3146";x.fillRect(0,0,c.width,c.height);
+      x.fillStyle="#363d58";x.fillRect(0,0,c.width,58);x.fillStyle="#5a5f78";x.fillRect(0,98,c.width,52);
+      for(let i=0;i<4;i++){x.fillStyle="#1d2234";x.fillRect(20+i*94,18,78,52);x.fillStyle=i===1?"#f4d35e":"#5a6484";x.fillRect(30+i*94,35,58,15)}
+      const cs=["#ee964b","#5fb49c","#f95738","#9b8bd6","#e0c068"];
+      for(let i=0;i<9;i++){const px=338-i*31+Math.sin(t*2+i)*2,sw=Math.sin(t*5+i)>0?1:0;
+        x.fillStyle="#2a3450";x.fillRect(px+4,112+sw,3,7);x.fillRect(px+8,112+(1-sw),3,7);
+        x.fillStyle=cs[i%cs.length];x.fillRect(px+2,101,10,13);x.fillStyle="#f0c49a";x.fillRect(px+5,94,6,7)}
+    })();
+  };
+  drawBomb();drawRush();
+</script>
+</body>
+</html>

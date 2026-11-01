@@ -1,0 +1,270 @@
+@import "tailwindcss";
+
+:root {
+  /* 硬核军事配色：作战文书纸 / 钢灰 / 血锈 / 黄铜 */
+  --ink: #0d0f14;
+  --paper: #ded2b0;
+  --red: #a8332a;
+  --amber: #c2a14a;
+  --teal: #4a6b50;
+  --navy: #2a3a52;
+  --steel: #39414f;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #07090d;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-family: "Noto Sans SC", "PingFang SC", "HarmonyOS Sans SC",
+    "Microsoft YaHei", system-ui, sans-serif;
+  font-weight: 500;
+}
+
+/* 全局降饱和、提对比 —— 硬核冷峻质感 */
+#root {
+  filter: saturate(0.82) contrast(1.08);
+}
+
+.font-num {
+  font-family: "Share Tech Mono", "SFMono-Regular", Consolas, monospace;
+  letter-spacing: 0.06em;
+  font-weight: 400;
+}
+
+/* 标题类文字加粗，保证军事海报的力量感 */
+h1, h2, h3 { font-weight: 900; }
+
+/* ---------- pixel boxes ---------- */
+.px-box {
+  position: relative;
+  border: 3px solid #14171f;
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 255, 255, 0.14),
+    4px 4px 0 0 rgba(0, 0, 0, 0.55);
+}
+.px-box-dark {
+  background: rgba(10, 13, 19, 0.94);
+  border: 3px solid #39414f;
+  box-shadow:
+    inset 0 0 0 2px rgba(0, 0, 0, 0.72),
+    4px 4px 0 0 rgba(0, 0, 0, 0.7);
+}
+.px-paper {
+  /* 作战文书：泛黄纸张 + 纤维噪点 */
+  background:
+    repeating-linear-gradient(0deg, rgba(90, 74, 40, 0.05) 0 2px, transparent 2px 4px),
+    linear-gradient(160deg, #e4d8b6 0%, #d6c79f 60%, #c9b98e 100%);
+  border: 3px solid #0d0f14;
+  box-shadow:
+    inset 0 0 0 2px #c3b288,
+    inset 0 0 36px rgba(80, 62, 30, 0.22),
+    6px 6px 0 0 rgba(0, 0, 0, 0.62);
+}
+
+/* ---------- pixel buttons ---------- */
+.px-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 3px solid #14171f;
+  background: var(--paper);
+  color: #14171f;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 60ms steps(2), filter 120ms;
+  box-shadow:
+    inset -3px -3px 0 0 rgba(0, 0, 0, 0.22),
+    inset 3px 3px 0 0 rgba(255, 255, 255, 0.35),
+    4px 4px 0 0 rgba(0, 0, 0, 0.55);
+}
+.px-btn:hover { filter: brightness(1.07); }
+.px-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow:
+    inset -3px -3px 0 0 rgba(0, 0, 0, 0.22),
+    inset 3px 3px 0 0 rgba(255, 255, 255, 0.35),
+    1px 1px 0 0 rgba(0, 0, 0, 0.55);
+}
+.px-btn:disabled {
+  filter: grayscale(0.8) brightness(0.7);
+  cursor: not-allowed;
+}
+.px-btn-red { background: var(--red); color: #fff4e0; }
+.px-btn-amber { background: var(--amber); color: #14171f; }
+.px-btn-dark { background: #232839; color: #e8e4d4; }
+.px-btn-teal { background: var(--teal); color: #fff4e0; }
+
+/* ---------- CRT / scanlines ---------- */
+.crt::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.13) 3px,
+    rgba(0, 0, 0, 0.13) 4px
+  );
+  mix-blend-mode: multiply;
+}
+.crt::after {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 61;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0) 58%, rgba(4, 6, 10, 0.55) 100%);
+}
+
+/* ---------- canvas pixel rendering ---------- */
+.pixel-canvas {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  cursor: none;
+}
+
+/* ---------- animations ---------- */
+@keyframes px-blink {
+  0%, 60% { opacity: 1; }
+  61%, 100% { opacity: 0; }
+}
+.anim-blink { animation: px-blink 1.1s steps(1) infinite; }
+
+@keyframes px-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.anim-bob { animation: px-bob 1.6s steps(4) infinite; }
+
+@keyframes px-shake {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-3px, 2px); }
+  50% { transform: translate(3px, -2px); }
+  75% { transform: translate(-2px, -2px); }
+  100% { transform: translate(0, 0); }
+}
+.anim-shake { animation: px-shake 0.28s steps(4) infinite; }
+
+@keyframes px-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.anim-marquee { animation: px-marquee 18s linear infinite; }
+
+@keyframes px-flash-red {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(213, 58, 38, 0); }
+  50% { box-shadow: 0 0 24px 4px rgba(213, 58, 38, 0.75); }
+}
+.anim-alert { animation: px-flash-red 0.8s steps(2) infinite; }
+
+@keyframes px-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.anim-rise { animation: px-rise 0.3s steps(5) both; }
+
+@keyframes px-pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  70% { transform: scale(1.08); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.anim-pop { animation: px-pop 0.24s steps(4) both; }
+
+/* hp bar chunks */
+.bar-chunk {
+  background-image: repeating-linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.28) 0px,
+    rgba(0, 0, 0, 0.28) 2px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0) 14px
+  );
+}
+
+/* striped warning */
+.tape {
+  background: repeating-linear-gradient(
+    -45deg,
+    #f2b63d 0 14px,
+    #14171f 14px 28px
+  );
+}
+
+/* typewriter caret */
+.caret::after {
+  content: "▌";
+  margin-left: 2px;
+  animation: px-blink 0.9s steps(1) infinite;
+}
+
+::selection { background: #d53a26; color: #fff4e0; }
+
+/* ---------- 硬核军事强化 ---------- */
+.px-btn {
+  border-radius: 0;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.28);
+}
+.px-btn-red { background: linear-gradient(180deg, #b53a2e 0%, #8d2a21 100%); color: #f0e4c8; }
+.px-btn-amber { background: linear-gradient(180deg, #caa851 0%, #9c7f32 100%); color: #14171f; }
+.px-btn-dark { background: linear-gradient(180deg, #353d4b 0%, #20262f 100%); color: #cfd4c2; }
+.px-btn-teal { background: linear-gradient(180deg, #4f7257 0%, #35503c 100%); color: #e6ecd8; }
+
+/* 军用警示带（更脏旧） */
+.tape {
+  background: repeating-linear-gradient(-45deg, #b89440 0 14px, #121419 14px 28px);
+  filter: contrast(0.92) brightness(0.92);
+}
+
+/* CRT：更强扫描线 + 轻微色散 */
+.crt::before {
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.2) 3px,
+    rgba(0, 0, 0, 0.2) 4px
+  );
+}
+.crt::after {
+  background:
+    radial-gradient(ellipse at center, rgba(0,0,0,0) 48%, rgba(2, 4, 7, 0.78) 100%);
+}
+
+/* 战术脉冲（警报） */
+@keyframes mil-pulse {
+  0%, 100% { box-shadow: inset 0 0 0 2px rgba(168, 51, 42, 0.25); }
+  50% { box-shadow: inset 0 0 0 2px rgba(168, 51, 42, 0.95), 0 0 18px rgba(168, 51, 42, 0.45); }
+}
+.anim-alert { animation: mil-pulse 0.9s steps(2) infinite; }
+
+/* 文书印章 */
+.stamp {
+  border: 4px double #8d2a21;
+  color: #8d2a21;
+  letter-spacing: 0.2em;
+  transform: rotate(-7deg);
+  opacity: 0.88;
+}
+
+::selection { background: #a8332a; color: #f0e4c8; }
+
+/* CRT 终端滚动亮带 */
+@keyframes crt-roll {
+  0% { top: -12%; }
+  100% { top: 104%; }
+}
+.anim-crt-roll { animation: crt-roll 4.2s linear infinite; }
+
+/* 隐藏终端滚动条 */
+.anim-crt-roll ~ div::-webkit-scrollbar,
+div[style*="scrollbar-width"]::-webkit-scrollbar { width: 0; height: 0; }
